@@ -35,24 +35,19 @@ if [[ $1 == "basics" ]]; then
     sudo reboot
 fi
 
-# install nvidia drivers
-if [[ $1 == "nvidia" ]]; then
+# firmware, drivers, gdm
+if [[ $1 == "drivers" ]]; then
+    # install nvidia drivers
     sudo xbps-install -S nvidia dkms linux-headers nvidia-libs-32bit
-fi
 
-# set up sound
-if [[ $1 == "sound" ]]; then
+    # set up sound
     sudo xbps-install -S alsa-utils apulse alsa-plugins-pulseaudio pulseaudio alsa-plugins
     sudo ln -s /etc/sv/alsa /var/service
-fi
 
-# get intel firmware
-if [[ $1 == "firmware" ]]; then
+    # get intel firmware
     sudo xbps-install -S intel-ucode && sudo xbps-reconfigure --force linux5.15
-fi
 
-# enable gdm
-if [[ $1 == "gdm" ]]; then
+    # enable gdm
     sudo ln -s /etc/sv/gdm /var/service
 fi
 
