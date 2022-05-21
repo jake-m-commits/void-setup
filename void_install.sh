@@ -91,3 +91,18 @@ fi
 if [[ $1 == "rust" ]]; then
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 fi
+
+# set up virtualization
+if [[ $1 == "virt" ]]; then
+    sudo xbps-install -S libvirt qemu virt-manager virt-manager-tools
+    sudo ln -s /etc/sv/libvirtd /var/service
+    sudo ln -s /etc/sv/virtlockd /var/service
+    sudo ln -s /etc/sv/virtlogd /var/service
+    sudo usermod -aG libvirt $USER
+    echo "######## NOTICE ##########"
+    echo "edit /etc/libvirt/libvirtd.conf"
+    echo "uncomment the following:"
+    echo "    unix_sock_group"
+    echo "    unix_sock_rw_perms"
+    echo "##########################"
+fi
